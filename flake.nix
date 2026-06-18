@@ -19,9 +19,9 @@
           nodejs_26
         ];
 
-        shellHock = ''
+        shellHook = ''
           npm install
-        ''
+        '';
       };
   };
 }
