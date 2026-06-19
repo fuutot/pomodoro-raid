@@ -7,9 +7,14 @@ const WORK_TIME = IS_DEBUG ? 5 : 25 * 60; // 5 seconds for debug, 25 minutes for
 
 function PomodoroTimer() {
   const [secondsLeft, setSecondsLeft] = useState(WORK_TIME);
+  const [isRunning, setIsRunning] = useState(false);
   const intervalId = useRef<number | undefined>(undefined);
 
   function startTimer() {
+    if (isRunning) return; // 二重にタイマーが走らないようにする
+
+    setIsRunning(true);
+
     intervalId.current = setInterval(() => {
       setSecondsLeft((prevSecondsLeft) => {
         // Updater 関数の中なら，最新の state を参照できる．
@@ -17,6 +22,7 @@ function PomodoroTimer() {
           return prevSecondsLeft - 1;
         } else {
           clearInterval(intervalId.current);
+          setIsRunning(false);
           return 0;
         }
       });
@@ -31,10 +37,18 @@ function PomodoroTimer() {
       </div>
       <div>
         <button onClick={startTimer}>Start</button>
-        <button onClick={() => clearInterval(intervalId.current)}>Pause</button>
         <button
           onClick={() => {
             clearInterval(intervalId.current);
+            setIsRunning(false);
+          }}
+        >
+          Pause
+        </button>
+        <button
+          onClick={() => {
+            clearInterval(intervalId.current);
+            setIsRunning(false);
             setSecondsLeft(WORK_TIME);
           }}
         >
