@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import './App.css';
 
 const IS_DEBUG = import.meta.env.DEV;
 
