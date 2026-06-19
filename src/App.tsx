@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const IS_DEBUG = import.meta.env.DEV;
 
@@ -8,6 +8,13 @@ function PomodoroTimer() {
   const [secondsLeft, setSecondsLeft] = useState(WORK_TIME);
   const [isRunning, setIsRunning] = useState(false);
   const intervalId = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      clearInterval(intervalId.current);
+      intervalId.current = undefined;
+    };
+  }, []);
 
   function startTimer() {
     if (isRunning) return; // 二重にタイマーが走らないようにする
