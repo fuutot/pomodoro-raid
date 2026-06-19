@@ -20,7 +20,7 @@
         ];
 
         shellHook = ''
-          npm install
+          npm ci
         '';
       };
   };
