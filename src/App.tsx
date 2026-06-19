@@ -32,8 +32,8 @@ function PomodoroTimer() {
   return (
     <div>
       <div>
-        <span>{Math.floor(secondsLeft / 60)}</span>:
-        <span>{secondsLeft % 60}</span>
+        <span>{String(Math.floor(secondsLeft / 60)).padStart(2, '0')}</span>:
+        <span>{String(secondsLeft % 60).padStart(2, '0')}</span>
       </div>
       <div>
         <button onClick={startTimer}>Start</button>
