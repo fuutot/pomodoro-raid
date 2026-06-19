@@ -32,7 +32,10 @@ function PomodoroTimer() {
       <div>
         <button onClick={ startTimer }>Start</button>
         <button onClick={() => clearInterval(intervalId.current)}>Pause</button>
-        <button>Reset</button>
+        <button onClick={() => {
+          clearInterval(intervalId.current);
+          setSecondsLeft(WORK_TIME);
+        }}>Reset</button>
       </div>
     </div>
   );
