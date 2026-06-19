@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './App.css'
 
 const IS_DEBUG = import.meta.env.DEV;
@@ -8,15 +8,16 @@ const WORK_TIME = IS_DEBUG ? 5 : 25 * 60; // 5 seconds for debug, 25 minutes for
 
 function PomodoroTimer() {
   const [secondsLeft, setSecondsLeft] = useState(WORK_TIME);
+  const intervalId = useRef<number | undefined>(undefined);
 
   function startTimer() {
-    const intervalId = setInterval(() => {
+    intervalId.current = setInterval(() => {
       setSecondsLeft(prevSecondsLeft => {
         // Updater 関数の中なら，最新の state を参照できる．
         if (prevSecondsLeft > 0) {
           return prevSecondsLeft - 1;
         } else {
-          clearInterval(intervalId);
+          clearInterval(intervalId.current);
           return 0;
         }
       });
@@ -30,7 +31,7 @@ function PomodoroTimer() {
       </div>
       <div>
         <button onClick={ startTimer }>Start</button>
-        <button>Pause</button>
+        <button onClick={() => clearInterval(intervalId.current)}>Pause</button>
         <button>Reset</button>
       </div>
     </div>
